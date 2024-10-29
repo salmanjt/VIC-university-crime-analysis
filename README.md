@@ -1,4 +1,4 @@
-# VIC-university-crime-analysis
+# VIC-university-crime-dashboard
 
 todo:
 - [ ] refine project files
