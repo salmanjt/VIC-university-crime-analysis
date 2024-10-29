@@ -2,4 +2,4 @@
 
 todo:
 - [ ] refine project files
-- [ ] write projest description
+- [ ] write project description
