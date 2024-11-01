@@ -14,6 +14,20 @@ output:
     df_print: paged
     keep_md: true
     toc_depth: 3
+  pdf_document:
+    toc: true
+    number_sections: true
+    theme: cosmo
+    highlight: breezedark
+    fig_width: 15
+    fig_height: 8
+    fig_caption: true
+    df_print: kable
+    keep_tex: true
+    latex_engine: xelatex
+    toc_depth: 3
+    includes:
+      in_header: preamble.tex
 editor_options:
   chunk_output_type: inline
 ---
@@ -53,7 +67,7 @@ take precautionary measures.
 
 # Data Sources
 
-- AURIN - National Education Facilities - Universities 2018
+- **AURIN - National Education Facilities - Universities 2018**
     - Provides geographic coordinates, addresses and location attributes of university locations 
     (educational institutes and campuses) in Australia.
     - Structure: Tabular data in CSV (Comma Separated Values) format, with 268 rows and
@@ -62,7 +76,7 @@ take precautionary measures.
     - Link to dataset:
     https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-universities-2018-na
 
-- Crime Statistics Agency - LGA Recorded Offences Year Ending March 2023
+- **Crime Statistics Agency - LGA Recorded Offences Year Ending March 2023**
     - Contains counts of recorded offences by offence type, in LGAs and suburbs,
     detailing offence division, subdivision and subgroup.
     - Structure: Tabular data in XLSX (Microsoft Excel) format with 359133 rows and 9
@@ -70,14 +84,14 @@ take precautionary measures.
     - Link to dataset:
     https://files.crimestatistics.vic.gov.au/2023-06/Data_Tables_LGA_Recorded_Offences_Year_Ending_March_2023.xlsx
 
-- Victoria Local Government Areas (LGAs) Boundaries
+- **Victoria Local Government Areas (LGAs) Boundaries**
     - Geospatial dataset containing geometry points for the LGA boundaries in Victoria.
     - Structure: Geospatial shapefiles with polygon geometry and coordinate reference
     system (CRS): GDA2020/EPSG:7844
     - Link to dataset:
     https://data.gov.au/dataset/ds-dga-bdf92691-c6fe-42b9-a0e2-a4cd716fa811/details
 
-- Victoria Suburb Boundaries
+- **Victoria Suburb Boundaries**
     - Geospatial dataset containing geometry points for suburb boundaries in Victoria.
     - Structure: Geospatial shapefiles with polygon geometry and coordinate reference
     system (CRS): GDA94/EPSG:4938
@@ -141,7 +155,7 @@ library(viridis)
 ### University Locations
 
 ```{r}
-df_uni <- read_csv("data/VIC_Universities.csv")
+df_uni <- read_csv("../data/input/VIC_Universities.csv")
 
 dim(df_uni)
 head(df_uni)
@@ -150,7 +164,7 @@ head(df_uni)
 ### Recorded Offences by Offence Type
 
 ```{r}
-df_offtype <- read.csv("data/VIC_RecordedOffences_OffenceType.csv")
+df_offtype <- read.csv("../data/input/VIC_RecordedOffences_OffenceType.csv")
 
 dim(df_offtype)
 head(df_offtype)
@@ -162,7 +176,7 @@ We load the datasets as simple feature (sf) dataframes and plot to visualise the
 
 ### Victorian Local Government Area (LGA) Boundaries
 ```{r}
-vic_lga <- st_read("data/VIC_lga_boundary/vic_lga.shp")
+vic_lga <- st_read("../data/input/VIC_lga_boundary/vic_lga.shp")
 
 dim(vic_lga)
 ```
@@ -172,7 +186,7 @@ head(vic_lga)
 ```
 
 ```{r}
-# Figure 1(a)
+# Figure 1(a) Victoria LGA Boundaries
 ggplot(data = vic_lga) +
   geom_sf() +
   ggtitle("Victoria LGA Boundaries") +
@@ -181,9 +195,8 @@ ggplot(data = vic_lga) +
   theme_economist() +
   theme(
     plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    # Space between x-axis label and plot
+    # Adjust x-axis and y-axis spacing
     axis.title.x = element_text(margin = margin(t = 20)),
-    # Space between y-axis label and plot
     axis.title.y = element_text(margin = margin(r = 20))
   )
 ```
@@ -194,7 +207,7 @@ ggplot(data = vic_lga) +
 
 ```{r}
 vic_sub <- st_read(
-  "data/VIC_suburb_boundary/VIC_LOCALITY_POLYGON_shp.shp"
+  "../data/input/VIC_suburb_boundary/VIC_LOCALITY_POLYGON_shp.shp"
 )
 
 dim(vic_sub)
@@ -205,7 +218,7 @@ head(vic_sub)
 ```
 
 ```{r}
-# Figure 1(b)
+# Figure 1(b) Victoria Suburb Boundaries
 ggplot(data = vic_sub) +
   geom_sf() +
   ggtitle("Victoria Suburb Boundaries") +
@@ -214,9 +227,8 @@ ggplot(data = vic_sub) +
   theme_economist() +
   theme(
     plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    # Space between x-axis label and plot
+    # Adjust x-axis and y-axis spacing
     axis.title.x = element_text(margin = margin(t = 20)),
-    # Space between y-axis label and plot
     axis.title.y = element_text(margin = margin(r = 20))
   )
 ```
@@ -327,7 +339,7 @@ crime_trends_uni
 ```
 
 ```{r}
-# Rename Offence Division for better readability
+# Rename Offence Divisions for better readability
 crime_trends_uni <- crime_trends_uni %>%
   mutate(Offence.Division = case_when(
     Offence.Division == "A Crimes against the person" ~ "Crimes Against Person",
@@ -390,11 +402,11 @@ ggplot(
     name = "Offence Count",
     low = "lightblue",
     high = "darkblue",
-    trans = "identity", # Show full numerical values
-    labels = scales::comma # Format legend labels as full numbers
+    trans = "identity",
+    labels = scales::comma
   ) +
 
-  # Coordinate Flip
+  # Flip coordinates
   coord_flip(clip = "off")
 ```
 
@@ -481,9 +493,8 @@ ggplot(
   theme(
     plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
     plot.margin = margin(10, 40, 10, 10),
-    # Space between x-axis label and plot
+    # Adjust x-axis and y-axis spacing
     axis.title.x = element_text(margin = margin(t = 20)),
-    # Space between y-axis label and plot
     axis.title.y = element_text(margin = margin(r = 20)),
     legend.position = "right",
     legend.key = element_blank(),
@@ -502,11 +513,11 @@ ggplot(
     name = "Offence Count",
     low = "lightblue",
     high = "darkblue",
-    trans = "identity", # Show full numerical values
-    labels = scales::comma # Format legend labels as full numbers
+    trans = "identity",
+    labels = scales::comma
   ) +
 
-  # Coordinate Flip
+  # Flip coordinates
   coord_flip(clip = "off")
 ```
 
@@ -567,7 +578,7 @@ gg <- ggplot(theft_subgroup_summary,
                     place = "centre",
                     size = 11) +
   
-  # Add a gradient color scale and rename legend title
+  # Add gradient color scale and rename legend title
   scale_fill_gradient(name = "Offence Count",
                       low = "lightblue", 
                       high = "darkblue") +
@@ -575,12 +586,12 @@ gg <- ggplot(theft_subgroup_summary,
   # Add title
   ggtitle("Distribution of Theft Offences by Subgroup") +
   
-  # Customize theme
+  # Customise theme
   theme(
     plot.title = element_text(hjust = 0.5),
-    plot.background = element_rect(fill = "#d6e3eb", color = NA), # Custom background color
-    legend.background = element_rect(fill = "#d6e3eb", color = NA), # Custom legend background color
-    panel.background = element_rect(fill = "#d6e3eb", color = NA) # Custom panel background color
+    plot.background = element_rect(fill = "#d6e3eb", color = NA),
+    legend.background = element_rect(fill = "#d6e3eb", color = NA),
+    panel.background = element_rect(fill = "#d6e3eb", color = NA)
   )
 
 # Print plot
@@ -1001,9 +1012,7 @@ ggplot(time_trend_data, aes(x = Year, y = Total_Count, color = Suburb)) +
   theme(
     plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
     plot.margin = margin(10, 40, 10, 10),
-    # Space between x-axis label and plot
     axis.title.x = element_text(margin = margin(t = 20)),
-    # Space between y-axis label and plot
     axis.title.y = element_text(margin = margin(r = 20)),
     legend.position = "right",
     legend.key = element_blank(),
