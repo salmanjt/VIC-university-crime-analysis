@@ -1,144 +1,160 @@
 ---
-title: "Exploring Criminal Offences and Crime Patterns in Proximity to University Campuses in Victoria, Australia"
+title: Exploring Criminal Offences and Crime Patterns in Proximity to University Campuses
+  in Victoria, Australia
 author: "Salman Tahir"
 output:
-  html_document:
-    toc: true
-    number_sections: true
-    theme: cosmo
-    highlight: breezedark
-    code_folding: show
-    fig_width: 15
-    fig_height: 8
-    fig_caption: true
-    df_print: paged
-    keep_md: true
-    toc_depth: 3
   pdf_document:
     toc: true
+    toc_depth: 3
+    number_sections: true
+    highlight: zenburn
+  html_document:
+    toc: true
+    toc_depth: 3
     number_sections: true
     theme: cosmo
-    highlight: breezedark
-    fig_width: 15
-    fig_height: 8
+    highlight: zenburn
+    code_folding: show
     fig_caption: true
-    df_print: kable
-    keep_tex: true
-    latex_engine: xelatex
-    toc_depth: 3
-    includes:
-      in_header: preamble.tex
+    fig_height: 6
+    fig_width: 10
+    df_print: paged
+    keep_md: true
 editor_options:
   chunk_output_type: inline
+  markdown: 
+    wrap: 72
 ---
 
 # Introduction
 
-The safety and well-being of university students is of paramount importance to educational
-institutions, law enforcement agencies and society at large. While universities are generally
-considered secure environments for intellectual and personal growth, they are not immune to
-criminal activities. Incidents of theft, assault and other forms of misconduct can have long-lasting
-psychological and emotional impacts on victims, as well as the wider university community.
+The safety and well-being of university students is of paramount
+importance to educational institutions, law enforcement agencies and
+society at large. While universities are generally considered secure
+environments for intellectual and personal growth, they are not immune
+to criminal activities. Incidents of theft, assault and other forms of
+misconduct can have long-lasting psychological and emotional impacts on
+victims, as well as the wider university community.
 
-The motivation for this capstone project in Data Visualisation and Analytics stemmed from a personal experience at Monash University,
-Clayton. An unfortunate incident involving the theft of my personal belongings, specifically Apple
-AirPods, from a temporarily vacated study space led to concerns about the security of personal
-items on university campuses. This incident, albeit minor, not only left a feeling of vulnerability but
-also raised broader questions about the prevalence of such incidents around educational
-institutions in Victoria, Australia. To better understand the scope and nature of the problem, this
-project aims to answer the following research questions:
+The motivation for this capstone project in Data Visualisation and
+Analytics stemmed from a personal experience at Monash University,
+Clayton. An unfortunate incident involving the theft of my personal
+belongings, specifically Apple AirPods, from a temporarily vacated study
+space led to concerns about the security of personal items on university
+campuses. This incident, albeit minor, not only left a feeling of
+vulnerability but also raised broader questions about the prevalence of
+such incidents around educational institutions in Victoria, Australia.
+To better understand the scope and nature of the problem, this project
+aims to answer the following research questions:
 
-1. What are the prevalent crime trends in areas surrounding university campuses across
-Victoria, Australia?
-2. Are there specific types of criminal offences that occur more frequently near university
-campuses compared to their neighbouring suburbs?
-3. What patterns in recorded criminal offences can be identified between suburbs in proximity
-to university campuses and the broader local government areas (LGAs)?
+1.  What are the prevalent crime trends in areas surrounding university
+    campuses across Victoria, Australia?
+2.  Are there specific types of criminal offences that occur more
+    frequently near university campuses compared to their neighbouring
+    suburbs?
+3.  What patterns in recorded criminal offences can be identified
+    between suburbs in proximity to university campuses and the broader
+    local government areas (LGAs)?
 
-These research questions aim to delve into the nuances of criminal activities in proximity to
-university campuses. By investigating various types of crimes and comparing them with broader
-geographic locations, this project also aims to uncover any discernible patterns or trends.
-Furthermore, the significance of this study extends beyond academic curiosity, as the findings
-have potential to influence institutional policies and law enforcement strategies. By identifying
-criminal hotspots and trends, universities (Safer Community Unit 2023) and law enforcement
-agencies can allocate their resources more efficiently. Additionally, this study also serves as a
-data-driven foundation for community engagement and awareness, empowering individuals to
-take precautionary measures.
+These research questions aim to delve into the nuances of criminal
+activities in proximity to university campuses. By investigating various
+types of crimes and comparing them with broader geographic locations,
+this project also aims to uncover any discernible patterns or trends.
+Furthermore, the significance of this study extends beyond academic
+curiosity, as the findings have potential to influence institutional
+policies and law enforcement strategies. By identifying criminal
+hotspots and trends, universities (Safer Community Unit 2023) and law
+enforcement agencies can allocate their resources more efficiently.
+Additionally, this study also serves as a data-driven foundation for
+community engagement and awareness, empowering individuals to take
+precautionary measures.
 
 # Data Sources
 
-- **AURIN - National Education Facilities - Universities 2018**
-    - Provides geographic coordinates, addresses and location attributes of university locations 
-    (educational institutes and campuses) in Australia.
-    - Structure: Tabular data in CSV (Comma Separated Values) format, with 268 rows and
-    15 columns. The data includes text and spatial attributes such as (longitude, latitude
-    and multipoint geometry).
-    - Link to dataset:
-    https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-universities-2018-na
-
-- **Crime Statistics Agency - LGA Recorded Offences Year Ending March 2023**
-    - Contains counts of recorded offences by offence type, in LGAs and suburbs,
-    detailing offence division, subdivision and subgroup.
-    - Structure: Tabular data in XLSX (Microsoft Excel) format with 359133 rows and 9
-    columns. The data includes date, text and numerical attributes.
-    - Link to dataset:
-    https://files.crimestatistics.vic.gov.au/2023-06/Data_Tables_LGA_Recorded_Offences_Year_Ending_March_2023.xlsx
-
-- **Victoria Local Government Areas (LGAs) Boundaries**
-    - Geospatial dataset containing geometry points for the LGA boundaries in Victoria.
-    - Structure: Geospatial shapefiles with polygon geometry and coordinate reference
-    system (CRS): GDA2020/EPSG:7844
-    - Link to dataset:
-    https://data.gov.au/dataset/ds-dga-bdf92691-c6fe-42b9-a0e2-a4cd716fa811/details
-
-- **Victoria Suburb Boundaries**
-    - Geospatial dataset containing geometry points for suburb boundaries in Victoria.
-    - Structure: Geospatial shapefiles with polygon geometry and coordinate reference
-    system (CRS): GDA94/EPSG:4938
-    - Link to dataset:
-    https://data.gov.au/data/dataset/vic-suburb-locality-boundaries-geoscape-administrative-boundaries
+-   **AURIN - National Education Facilities - Universities 2018**
+    -   Provides geographic coordinates, addresses and location
+        attributes of university locations (educational institutes and
+        campuses) in Australia.
+    -   Structure: Tabular data in CSV (Comma Separated Values) format,
+        with 268 rows and 15 columns. The data includes text and spatial
+        attributes such as (longitude, latitude and multipoint
+        geometry).
+    -   Link to dataset:
+        <https://data.aurin.org.au/dataset/aurin-aurin-national-education-dataset-universities-2018-na>
+-   **Crime Statistics Agency - LGA Recorded Offences Year Ending March
+    2023**
+    -   Contains counts of recorded offences by offence type, in LGAs
+        and suburbs, detailing offence division, subdivision and
+        subgroup.
+    -   Structure: Tabular data in XLSX (Microsoft Excel) format with
+        359133 rows and 9 columns. The data includes date, text and
+        numerical attributes.
+    -   Link to dataset:
+        <https://files.crimestatistics.vic.gov.au/2023-06/Data_Tables_LGA_Recorded_Offences_Year_Ending_March_2023.xlsx>
+-   **Victoria Local Government Areas (LGAs) Boundaries**
+    -   Geospatial dataset containing geometry points for the LGA
+        boundaries in Victoria.
+    -   Structure: Geospatial shapefiles with polygon geometry and
+        coordinate reference system (CRS): GDA2020/EPSG:7844
+    -   Link to dataset:
+        <https://data.gov.au/dataset/ds-dga-bdf92691-c6fe-42b9-a0e2-a4cd716fa811/details>
+-   **Victoria Suburb Boundaries**
+    -   Geospatial dataset containing geometry points for suburb
+        boundaries in Victoria.
+    -   Structure: Geospatial shapefiles with polygon geometry and
+        coordinate reference system (CRS): GDA94/EPSG:4938
+    -   Link to dataset:
+        <https://data.gov.au/data/dataset/vic-suburb-locality-boundaries-geoscape-administrative-boundaries>
 
 # Data Wrangling
 
-In the context of our project, data wrangling served a major role for subsequent downstream analyses. It allowed us to filter out
-irrelevant information, handle missing values and merge datasets to correlate information. Our project contains multiple datasets
-from various sources, each with its own set of characteristics, missing values and potential outliers,
-making data wrangling an essential step of the overall analytics process.
+In the context of our project, data wrangling served a major role for
+subsequent downstream analyses. It allowed us to filter out irrelevant
+information, handle missing values and merge datasets to correlate
+information. Our project contains multiple datasets from various
+sources, each with its own set of characteristics, missing values and
+potential outliers, making data wrangling an essential step of the
+overall analytics process.
 
-The raw data from the above sources was cleansed and transformed to create structured datasets. This process
-was done in Jupyter Notebook using R and the notebook is made available in the repository. The following is a
-summary of the steps taken to clean and transform the data:
+The raw data from the above sources was cleansed and transformed to
+create structured datasets. This process was done in Jupyter Notebook
+using R and the notebook is made available in the repository. The
+following is a summary of the steps taken to clean and transform the
+data:
 
-1. Loading and Inspecting Data
-The datasets were loaded as dataframes and inspected to understand the structure
-of the data. The initial inspection of the datasets gives us an overall view of the data, the
-attributes and their types.
+1.  Loading and Inspecting Data The datasets were loaded as dataframes
+    and inspected to understand the structure of the data. The initial
+    inspection of the datasets gives us an overall view of the data, the
+    attributes and their types.
 
-2. Filtering for VIC universities
-The university locations dataset was filtered to only contain universities belonging to the
-state of Victoria, as our project primarily focuses on crime patterns in Victoria. Similarly,
-when focusing on a specific suburb, LGA or offence type, data filtering was performed.
+2.  Filtering for VIC universities The university locations dataset was
+    filtered to only contain universities belonging to the state of
+    Victoria, as our project primarily focuses on crime patterns in
+    Victoria. Similarly, when focusing on a specific suburb, LGA or
+    offence type, data filtering was performed.
 
-3. Column Reduction
-Unnecessary columns were dropped from both datasets, and specific columns were
-renamed for easier manipulation and better readability. Further to this, the case sensitivity
-was also inspected and handled to ensure smooth interoperability of data.
+3.  Column Reduction Unnecessary columns were dropped from both
+    datasets, and specific columns were renamed for easier manipulation
+    and better readability. Further to this, the case sensitivity was
+    also inspected and handled to ensure smooth interoperability of
+    data.
 
-4. Handling NULL values
-The datasets were checked for any NULL values, no null values were found.
+4.  Handling NULL values The datasets were checked for any NULL values,
+    no null values were found.
 
-5. Handling duplicate values
-Some instances of data pertaining to university locations had duplicates, these were
-identified and removed to ensure data redundancies do not occur.
+5.  Handling duplicate values Some instances of data pertaining to
+    university locations had duplicates, these were identified and
+    removed to ensure data redundancies do not occur.
 
-6. Exporting clean data for downstream analysis
-The cleaned datasets were then exported for subsequent downstream analyses.
+6.  Exporting clean data for downstream analysis The cleaned datasets
+    were then exported for subsequent downstream analyses.
 
-The cleaned datasets were then imported into R/RStudio for further analysis and visualisation.
+The cleaned datasets were then imported into R/RStudio for further
+analysis and visualisation.
 
 ## Import Libraries
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(leaflet)
 library(sf)
@@ -148,6 +164,7 @@ library(treemap)
 library(treemapify)
 library(fmsb)
 library(viridis)
+library(htmlwidgets)
 ```
 
 ## Load Tabular Datasets
@@ -155,6 +172,7 @@ library(viridis)
 ### University Locations
 
 ```{r}
+# Read university locations data
 df_uni <- read_csv("../data/input/VIC_Universities.csv")
 
 dim(df_uni)
@@ -164,6 +182,7 @@ head(df_uni)
 ### Recorded Offences by Offence Type
 
 ```{r}
+# Read recorded offences data
 df_offtype <- read.csv("../data/input/VIC_RecordedOffences_OffenceType.csv")
 
 dim(df_offtype)
@@ -172,10 +191,13 @@ head(df_offtype)
 
 ## Load Spatial Datasets
 
-We load the datasets as simple feature (sf) dataframes and plot to visualise the correctness of the data.
+We load the datasets as simple feature (sf) dataframes and plot to
+visualise the correctness of the data.
 
 ### Victorian Local Government Area (LGA) Boundaries
+
 ```{r}
+# Read Victoria LGA boundaries
 vic_lga <- st_read("../data/input/VIC_lga_boundary/vic_lga.shp")
 
 dim(vic_lga)
@@ -194,14 +216,23 @@ ggplot(data = vic_lga) +
   ylab("Latitude") +
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(t = 10, b = 30),
+                              size = rel(1.2)),
     # Adjust x-axis and y-axis spacing
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20))
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
   )
 ```
 
-**Figure 1(a). Geospatial data of Victoria Local Government Area (LGA) Boundaries**
+**Figure 1(a). Geospatial data of Victoria Local Government Area (LGA)
+Boundaries**
+
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig1a.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
 
 ### Victorian Suburbs Boundaries
 
@@ -226,74 +257,92 @@ ggplot(data = vic_sub) +
   ylab("Latitude") +
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(t = 10, b = 30),
+                              size = rel(1.2)),
     # Adjust x-axis and y-axis spacing
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20))
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
   )
 ```
 
-**Figure 1(b). Geospatial data of Victoria Suburb Boundaries**
+**Figure 1(b). Geospatial data of Victoria Suburb Boundaries.**
 
-For subsequent analyses, the university locations dataset was also transformed into a spatial
-object, therefore the coordinate reference system (CRS) for all spatial data was transformed to
-GDA2020 or EPSG:7844 to ensure that the data aligns correctly when displayed on a map/plot.
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig1b.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+For subsequent analyses, the university locations dataset was also
+transformed into a spatial object, therefore the coordinate reference
+system (CRS) for all spatial data was transformed to GDA2020 or
+EPSG:7844 to ensure that the data aligns correctly when displayed on a
+map/plot.
 
 # Data Analysis
 
-Rigorous data checking was an integral part of this project during Analysis.
-The following steps were performed to ensure further cleanliness and completeness of the data.
+Rigorous data checking was an integral part of this project during
+Analysis. The following steps were performed to ensure further
+cleanliness and completeness of the data.
 
-1. Column Renaming
-Columns like 'Suburb/Town Name', where the data may introduce ambiguity, were renamed
-to 'Suburb' to maintain consistency across the datasets.
+1.  Column Renaming Columns like 'Suburb/Town Name', where the data may
+    introduce ambiguity, were renamed to 'Suburb' to maintain
+    consistency across the datasets.
 
-2. Data Filtering
-Data filtering was performed extensively to explore the data and later make visualisations
-according to our specific research questions. For example, the recorded offences' dataset
-was filtered to only include offence related information for suburbs that are in proximity to
-university campuses.
+2.  Data Filtering Data filtering was performed extensively to explore
+    the data and later make visualisations according to our specific
+    research questions. For example, the recorded offences' dataset was
+    filtered to only include offence related information for suburbs
+    that are in proximity to university campuses.
 
-3. Case Handling
-The case of suburb names was standardised to title case to ensure that string matching
-operations would not fail or display incorrect statistics due to case sensitivity.
+3.  Case Handling The case of suburb names was standardised to title
+    case to ensure that string matching operations would not fail or
+    display incorrect statistics due to case sensitivity.
 
-4. Data Grouping and Summarizations
-The data was grouped and summarised multiple times, based on specific requirements to
-answer our research questions. For example, the data was grouped by offence types and
-summarised by the total of offence counts for each type.
+4.  Data Grouping and Summarizations The data was grouped and summarised
+    multiple times, based on specific requirements to answer our
+    research questions. For example, the data was grouped by offence
+    types and summarised by the total of offence counts for each type.
 
-5. Data Transformations
-The structure of the data was changed to facilitate the creation of data visualisations such
-as grouped bar charts and heatmaps. Transformations were made to the data to convert it
-into long format, as to accommodate for offence groupings when creating the subsequent
-visualisations. Such transformations were also done in the data checking process to ensure
-one dataset joins successfully with another dataset.
+5.  Data Transformations The structure of the data was changed to
+    facilitate the creation of data visualisations such as grouped bar
+    charts and heatmaps. Transformations were made to the data to
+    convert it into long format, as to accommodate for offence groupings
+    when creating the subsequent visualisations. Such transformations
+    were also done in the data checking process to ensure one dataset
+    joins successfully with another dataset.
 
-Furthermore, the data attributes were made consistent across our datasets.
-No missing values or duplicates were found during the data checking phase,
-and all identified errors were corrected.
+Furthermore, the data attributes were made consistent across our
+datasets. No missing values or duplicates were found during the data
+checking phase, and all identified errors were corrected.
 
-The data exploration part of this project dives deep into the patterns, trends and any findings
-uncovered from exploring and analysing our datasets. Using various plotting libraries such as ggplot2, leaflet and treemapify, we address and visualise
-each of our research questions in a focused manner. The data exploration part of our project is
-segmented into three main categories (see the headings below) where each segment aims to
-uncover nuanced facets of criminal activity in and around suburbs with university campuses in
-Victoria, Australia
+The data exploration part of this project dives deep into the patterns,
+trends and any findings uncovered from exploring and analysing our
+datasets. Using various plotting libraries such as ggplot2, leaflet and
+treemapify, we address and visualise each of our research questions in a
+focused manner. The data exploration part of our project is segmented
+into three main categories (see the headings below) where each segment
+aims to uncover nuanced facets of criminal activity in and around
+suburbs with university campuses in Victoria, Australia
 
 ## Prevalent Crime Trends near University Campuses
 
-Focusing on our first research question, we aim to analyse and explore the prevalent crime trends
-in and around areas surrounding university campuses across Victoria.
-The data pertaining to recorded criminal offences in Victoria ranged from the year 2014 to 2023.
-At the initial stage of our exploration, we account for offence counts in all years. Additionally, the
-data was filtered to include offence information for only suburbs that have universities. This helps
-us focus and explore the prevalent crime trends in university suburbs only. Data grouping and
-summarizations were performed to visualise the total count of offences by offence division,
-subdivision and subgroups. Our approach incorporated the use of visual analytics, generating
-horizontal bar charts to visualise the total offence counts by offence division and subdivision, as
-seen in Figure 2. and Figure 3. below. And, a tree map was used to visualise and understand the
-distribution and frequency of different subgroups of criminal offences, as seen in Figure 4 below.
+Focusing on our first research question, we aim to analyse and explore
+the prevalent crime trends in and around areas surrounding university
+campuses across Victoria. The data pertaining to recorded criminal
+offences in Victoria ranged from the year 2014 to 2023. At the initial
+stage of our exploration, we account for offence counts in all years.
+Additionally, the data was filtered to include offence information for
+only suburbs that have universities. This helps us focus and explore the
+prevalent crime trends in university suburbs only. Data grouping and
+summarizations were performed to visualise the total count of offences
+by offence division, subdivision and subgroups. Our approach
+incorporated the use of visual analytics, generating horizontal bar
+charts to visualise the total offence counts by offence division and
+subdivision, as seen in Figure 2. and Figure 3. below. And, a tree map
+was used to visualise and understand the distribution and frequency of
+different subgroups of criminal offences, as seen in Figure 4 below.
 
 ```{r}
 # Capitalise the first letter of each suburb in df_uni
@@ -363,10 +412,10 @@ ggplot(
 ) +
 
   # Bar Columns
-  geom_col(aes(fill = Total_Count)) +
+  geom_col(aes(fill = Total_Count), width = 0.8) +
 
   # Text Labels for Bar Columns
-  geom_text(aes(label = comma(Total_Count)),
+  geom_text(aes(label = scales::comma(Total_Count)),
     hjust = -0.1,
     position = position_dodge(width = 0.9)
   ) +
@@ -379,22 +428,24 @@ ggplot(
   # Theme and Formatting
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    plot.margin = margin(10, 40, 10, 10),
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(t = 10, b = 30),
+                              size = rel(1.2)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
     # Space between x-axis label and plot
-    axis.title.x = element_text(margin = margin(t = 20)),
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
     # Space between y-axis label and plot
-    axis.title.y = element_text(margin = margin(r = 20)),
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
     legend.position = "right",
     legend.key = element_blank(),
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 10)
+    legend.title = element_text(size = rel(1)),
+    legend.text = element_text(size = rel(1))
   ) +
 
   # Y-axis Configuration
   scale_y_continuous(
-    labels = comma,
-    expand = expansion(c(0, 0.1))
+    labels = scales::comma,
+    expand = expansion(c(0, 0.15))
   ) +
 
   # Colour Gradient and Legend Configuration
@@ -407,19 +458,28 @@ ggplot(
   ) +
 
   # Flip coordinates
-  coord_flip(clip = "off")
+  coord_flip(clip = "off", ylim = c(0, max(crime_trends_uni$Total_Count) * 1.2))
 ```
 
-**Figure 2. A horizontal bar chart representing the prevalent types of crimes (grouped by offence
-division) in suburbs with university campuses. The sequential colour palette and legend show
-the count of offences for each offence division.**
+**Figure 2. A horizontal bar chart representing the prevalent types of
+crimes (grouped by offence division) in suburbs with university
+campuses. The sequential colour palette and legend show the count of
+offences for each offence division.**
 
-From the bar chart visualisation in Figure 2, we identified that the most prevalent type (offence
-division) of criminal offences, in Suburbs with university campuses, are related to property and
-deception. Once we identified the high-frequency offence divisions, we can now break down the
-analysis to take a closer look at the subdivisions within the 'Property & Deception' offence division.
-To do so, we visualised the total count of offences by offence subdivision for this particular
-offence division in a horizontal bar chart, as can be seen in Figure 3. below.
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig2.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+From the bar chart visualisation in Figure 2, we identified that the
+most prevalent type (offence division) of criminal offences, in Suburbs
+with university campuses, are related to property and deception. Once we
+identified the high-frequency offence divisions, we can now break down
+the analysis to take a closer look at the subdivisions within the
+'Property & Deception' offence division. To do so, we visualised the
+total count of offences by offence subdivision for this particular
+offence division in a horizontal bar chart, as can be seen in Figure 3.
+below.
 
 ```{r}
 # Dimensions of our offence data
@@ -454,7 +514,7 @@ property_deception_subdivision <- property_deception_subdivision %>%
     Offence.Subdivision == "B40 Theft" ~ "Theft",
     Offence.Subdivision == "B50 Deception" ~ "Deception",
     Offence.Subdivision == "B60 Bribery" ~ "Bribery",
-    TRUE ~ Offence.Subdivision # keeps the original value if none of the above conditions are met
+    TRUE ~ Offence.Subdivision # keep original value if above conds. are not met
   )) %>%
   arrange(desc(Subdivision_Total_Count))
 
@@ -475,10 +535,10 @@ ggplot(
 ) +
 
   # Bar Columns
-  geom_col(aes(fill = Subdivision_Total_Count)) +
+  geom_col(aes(fill = Subdivision_Total_Count), width = 0.8) +
 
   # Text Labels for Bar Columns
-  geom_text(aes(label = comma(Subdivision_Total_Count)),
+  geom_text(aes(label = scales::comma(Subdivision_Total_Count)),
     hjust = -0.1,
     position = position_dodge(width = 0.9)
   ) +
@@ -491,21 +551,24 @@ ggplot(
   # Theme and Formatting
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    plot.margin = margin(10, 40, 10, 10),
-    # Adjust x-axis and y-axis spacing
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20)),
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(t = 10, b = 30),
+                              size = rel(1.2)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+    # Space between x-axis label and plot
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
+    # Space between y-axis label and plot
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
     legend.position = "right",
     legend.key = element_blank(),
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 10)
+    legend.title = element_text(size = rel(1)),
+    legend.text = element_text(size = rel(1))
   ) +
 
   # Y-axis Configuration
   scale_y_continuous(
-    labels = comma,
-    expand = expansion(c(0, 0.1))
+    labels = scales::comma,
+    expand = expansion(c(0, 0.15))
   ) +
 
   # Colour Gradient and Legend Configuration
@@ -517,19 +580,29 @@ ggplot(
     labels = scales::comma
   ) +
 
-  # Flip coordinates
-  coord_flip(clip = "off")
+  # Flip coordinates with additional space
+  coord_flip(clip = "off",
+             ylim = c(0,max(property_deception_subdivision$Subdivision_Total_Count) * 1.2))
+
 ```
 
-**Figure 3. A horizontal bar chart, breaking down the most prevalent criminal offence 'Property &
-Deception' into offence subdivision. The sequential colour palette and legend show the
-frequency of offence counts for each offence subdivision.**
+**Figure 3. A horizontal bar chart, breaking down the most prevalent
+criminal offence 'Property & Deception' into offence subdivision. The
+sequential colour palette and legend show the frequency of offence
+counts for each offence subdivision.**
 
-The breakdown of property and deception offences, as displayed in Figure 3. reveals that 'Theft' is
-by far the highest criminal offence in university suburbs, with a total count of 301,938. Now, we
-can further analyse the data to identify which subgroups of the 'Theft' offence subdivision are
-most prevalent. We effectively visualise this information using a tree map to represent the
-distribution of theft related offences, as can be seen in Figure 4. below.
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig3.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+The breakdown of property and deception offences, as displayed in Figure
+3. reveals that 'Theft' is by far the highest criminal offence in
+university suburbs, with a total count of 301,938. Now, we can further
+analyse the data to identify which subgroups of the 'Theft' offence
+subdivision are most prevalent. We effectively visualise this
+information using a tree map to represent the distribution of theft
+related offences, as can be seen in Figure 4. below.
 
 ```{r}
 # Further filter the data to include only Theft subgroup
@@ -588,62 +661,78 @@ gg <- ggplot(theft_subgroup_summary,
   
   # Customise theme
   theme(
-    plot.title = element_text(hjust = 0.5),
+    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
     plot.background = element_rect(fill = "#d6e3eb", color = NA),
     legend.background = element_rect(fill = "#d6e3eb", color = NA),
     panel.background = element_rect(fill = "#d6e3eb", color = NA)
   )
-
-# Print plot
-gg
 ```
 
-**Figure 4. Treemap distribution of offences inside the 'Theft' offence subdivision. The size and
-colour palette represent the count of offences, where the bigger size and darker colour refers to
-a higher frequency of recorded offences. The legend represents offence counts for offence
-subgroups related to Theft.**
+**Figure 4. Treemap distribution of offences inside the 'Theft' offence
+subdivision. The size and colour palette represent the count of
+offences, where the bigger size and darker colour refers to a higher
+frequency of recorded offences. The legend represents offence counts for
+offence subgroups related to Theft.**
 
-Therefore, by narrowing our focus to suburbs with university campuses, we were able to shed light
-on the specific types of criminal activities that are most frequent in these areas. The visual
-analytics, Figures 2 and 3, served as compelling evidence for effectively communicating these
-trends. They revealed that 'Property & Deception' offences are predominant, with 'Theft' being the
-most frequent offence subdivision within the category. Furthermore, the tree map visualisation,
-Figure 4, offered a nuanced understanding of the various subgroups within the 'Theft' category,
-where we identify that 'Other Theft' and 'Steal from Motor Vehicle' are most prevalent.
-The Crime Statistics Agency of Victoria, states that 'Other Theft' offence subgroup relates to all
-other theft that cannot be classified elsewhere in the 'Theft' subdivision. (Crime Statistics Agency,
-2023). Therefore, our analysis demonstrates that theft (except motor vehicles) and stealing from
-motor vehicles are the most prevalent criminal offences in Victorian suburbs with university
-campuses
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig4.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+Therefore, by narrowing our focus to suburbs with university campuses,
+we were able to shed light on the specific types of criminal activities
+that are most frequent in these areas. The visual analytics, Figures 2
+and 3, served as compelling evidence for effectively communicating these
+trends. They revealed that 'Property & Deception' offences are
+predominant, with 'Theft' being the most frequent offence subdivision
+within the category. Furthermore, the tree map visualisation, Figure 4,
+offered a nuanced understanding of the various subgroups within the
+'Theft' category, where we identify that 'Other Theft' and 'Steal from
+Motor Vehicle' are most prevalent. The Crime Statistics Agency of
+Victoria, states that 'Other Theft' offence subgroup relates to all
+other theft that cannot be classified elsewhere in the 'Theft'
+subdivision. (Crime Statistics Agency, 2023). Therefore, our analysis
+demonstrates that theft (except motor vehicles) and stealing from motor
+vehicles are the most prevalent criminal offences in Victorian suburbs
+with university campuses
 
 ## Correlating Offences in University Suburbs with their Neighbouring suburbs (LGAs)
 
-The second research question of our study seeks to explore the specific types of criminal offences
-that occur more frequently in suburbs with university campuses compared to their neighbouring
-suburbs. By correlating criminal activities in university suburbs with their neighbouring areas, we
-can identify any distinct patterns or types of crimes that are more prevalent near educational
-institutions. To address this question, we identified the local government areas (LGAs) associated
-with each university campus using spatial joins. Since we are looking for a correlation in offences
-between university suburbs and their surrounding areas, instead of comparing the offence counts
-in university suburbs with the broader LGA, we instead opt for a more granular approach. A suburb
-shares more local characteristics with its immediate neighbouring suburbs than the broader LGAs
-that may introduce more noise into the data such as diverse types of localities (rural, suburban or
-urban). Therefore, we identified the immediate neighbouring suburbs that touch the boundary of
-the university suburbs and calculate the total offence counts for each area type (university
-suburbs and neighbouring suburbs).
-To allow for a more meaningful comparison of criminal offences in university suburbs and their
-neighbouring suburbs, instead of comparing the total offence counts, we instead normalised the
-data to make it comparable as a fraction of the total for each area. This was done because the
-number of university suburbs '39' and the number of neighbouring suburbs '215' is different,
-therefore the offence counts may be more biased towards the area type with the higher quantity of
-suburbs. We instead calculate the concentration of offences for each area type as:
+The second research question of our study seeks to explore the specific
+types of criminal offences that occur more frequently in suburbs with
+university campuses compared to their neighbouring suburbs. By
+correlating criminal activities in university suburbs with their
+neighbouring areas, we can identify any distinct patterns or types of
+crimes that are more prevalent near educational institutions. To address
+this question, we identified the local government areas (LGAs)
+associated with each university campus using spatial joins. Since we are
+looking for a correlation in offences between university suburbs and
+their surrounding areas, instead of comparing the offence counts in
+university suburbs with the broader LGA, we instead opt for a more
+granular approach. A suburb shares more local characteristics with its
+immediate neighbouring suburbs than the broader LGAs that may introduce
+more noise into the data such as diverse types of localities (rural,
+suburban or urban). Therefore, we identified the immediate neighbouring
+suburbs that touch the boundary of the university suburbs and calculate
+the total offence counts for each area type (university suburbs and
+neighbouring suburbs). To allow for a more meaningful comparison of
+criminal offences in university suburbs and their neighbouring suburbs,
+instead of comparing the total offence counts, we instead normalised the
+data to make it comparable as a fraction of the total for each area.
+This was done because the number of university suburbs '39' and the
+number of neighbouring suburbs '215' is different, therefore the offence
+counts may be more biased towards the area type with the higher quantity
+of suburbs. We instead calculate the concentration of offences for each
+area type as:
 
-```{=latex}
-Concentration = \frac{Total Offence Count}{Total Offence Count for Area Type}
-```
+$$
+Concentration = \frac{Total\:Offence\:Count}{Total\:Offence\:Count\:for\:Area\:Type}
+$$
 
-This provides a more meaningful comparison of the types of offences prevalent in university
-suburbs and their neighbouring suburbs, as can be seen in Figure 5. below.
+This provides a more meaningful comparison of the types of offences
+prevalent in university suburbs and their neighbouring suburbs, as can
+be seen in Figure 5. below.
 
 ```{r}
 # Make a spatial object for uni data
@@ -769,10 +858,14 @@ aa_combined_data
 
 ```{r}
 # Re-level the Area_Type variable to make 'Neighbour Suburbs' appear first
-aa_combined_data$Area_Type <- factor(aa_combined_data$Area_Type, levels = c("University Suburbs", "Neighbouring Suburbs"))
+aa_combined_data$Area_Type <- factor(aa_combined_data$Area_Type, 
+                                     levels = c("University Suburbs", 
+                                                "Neighbouring Suburbs"))
 
-# Figure 5. Grouped Bar Chart showing the concentration of criminal offences in University Suburbs and Neighbouring Suburbs
-ggplot(aa_combined_data, aes(x = Offence.Division, y = Concentration, fill = Area_Type)) +
+# Figure 5. Grouped Bar Chart showing the concentration of criminal offences 
+# in University Suburbs and Neighbouring Suburbs
+ggplot(aa_combined_data, aes(x = Offence.Division, 
+                             y = Concentration, fill = Area_Type)) +
   geom_bar(stat = "identity", position = "dodge") +
   labs(title = "Concentration of Offence Divisions grouped by Area Type ",
        x = "Offence Division",
@@ -785,31 +878,48 @@ ggplot(aa_combined_data, aes(x = Offence.Division, y = Concentration, fill = Are
   scale_y_continuous(labels = scales::percent_format(scale = 100)) +
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20)),
+    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 30), 
+                              size = rel(1.2)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+    # Space between x-axis label and plot
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
+    # Space between y-axis label and plot
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
     legend.position = "right",
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 10)
-  ) + 
+    legend.key = element_blank(),
+    legend.title = element_text(size = rel(1)),
+    legend.text = element_text(size = rel(1))
+  ) +
   coord_flip(clip = "off")
+
 ```
 
-**Figure 5. A horizontal grouped bar chart representing the concentration of criminal offences for
-each offence division (offence type) in university suburbs and their neighbouring suburbs. The
-asterisk on x-axis Concentration refers to the formula used for calculation, as seen above.**
+**Figure 5. A horizontal grouped bar chart representing the
+concentration of criminal offences for each offence division (offence
+type) in university suburbs and their neighbouring suburbs. The asterisk
+on x-axis Concentration refers to the formula used for calculation, as
+seen above.**
 
-As seen in Figure 5. criminal offences related to crimes against person, drug offences, justice
-procedures and public order/safety are more prevalent in university suburbs with 'Crimes Against
-Person' being the most prominent variable. Furthermore, 'Property & Deception' crimes form a
-larger part of total crimes in 'Neighbouring Suburbs' (60.9%) and in University Suburbs (52.9%).
-Although there are various other factors, such as population sizes and rates per capita, that may
-affect our analysis. The key takeaway from our visualisation is that almost all offence types, with
-the exclusion of Property & Deception, are more prevalent in neighbouring suburbs than suburbs
-with university campuses. To delve deeper into the distribution and frequency of offences, we
-utilise heatmap analysis, specifically focusing on property-related crimes (Property & Deception).
-We selected a subset of our data to focus on one university suburb, Clayton, and its neighbouring
-suburbs, as seen in heatmap visualisation, Figure 6. below.
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig5.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+As seen in Figure 5. criminal offences related to crimes against person,
+drug offences, justice procedures and public order/safety are more
+prevalent in university suburbs with 'Crimes Against Person' being the
+most prominent variable. Furthermore, 'Property & Deception' crimes form
+a larger part of total crimes in 'Neighbouring Suburbs' (60.9%) and in
+University Suburbs (52.9%). Although there are various other factors,
+such as population sizes and rates per capita, that may affect our
+analysis. The key takeaway from our visualisation is that almost all
+offence types, with the exclusion of Property & Deception, are more
+prevalent in neighbouring suburbs than suburbs with university campuses.
+To delve deeper into the distribution and frequency of offences, we
+utilise heatmap analysis, specifically focusing on property-related
+crimes (Property & Deception). We selected a subset of our data to focus
+on one university suburb, Clayton, and its neighbouring suburbs, as seen
+in heatmap visualisation, Figure 6. below.
 
 ```{r}
 # Identify the row corresponding to Clayton in your spatial object
@@ -861,7 +971,7 @@ clayton_B_summary <- clayton_B_summary %>%
     Offence.Subdivision == "B40 Theft" ~ "Theft",
     Offence.Subdivision == "B50 Deception" ~ "Deception",
     Offence.Subdivision == "B60 Bribery" ~ "Bribery",
-    TRUE ~ Offence.Subdivision # keeps the original value if none of the above conditions are met
+    TRUE ~ Offence.Subdivision # keep original value if above conds. are not met
   ))
 ```
 
@@ -883,54 +993,81 @@ clayton_B_summary <- clayton_B_summary %>%
 
 ```{r}
 # Figure 6. Heatmap of Property-Related Offences in Clayton and Neighbouring Suburbs
-ggplot(clayton_B_summary, aes(x = Suburb, y = `Offence.Subdivision`, fill = Total_Count)) +
+ggplot(clayton_B_summary, aes(x = Suburb, 
+                              y = `Offence.Subdivision`, fill = Total_Count)) +
 
   # Tile plot
   geom_tile() +
 
   # Text annotations for percentages, centered and white
-  geom_text(aes(label = sprintf("%.2f%%", Percentage)), vjust = 0.5, hjust = 0.5, col = "white") +
+  geom_text(aes(label = sprintf("%.2f%%", Percentage)), 
+            vjust = 0.5, hjust = 0.5, col = "white") +
 
   # Title and Axis Labels
-  ggtitle("Heatmap of Property Related Offences in Clayton and Neighboring Suburbs") +
+  ggtitle("Heatmap of Property Related Offences in Clayton and Neighbouring Suburbs") +
   xlab("Suburb") +
   ylab("Offence Subdivision") +
-  scale_fill_gradient(low = "#58a6ff", high = "#f85149", name = "Total Count of\nOffences") +
+
+  # Colour Gradient Configuration for Total Count
+  scale_fill_gradient(
+    low = "#58a6ff",
+    high = "#f85149",
+    name = "Total Count of\nOffences"
+  ) +
 
   # Theme and Formatting
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    plot.margin = margin(10, 40, 10, 10),
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20)),
+    plot.title = element_text(hjust = 0.6, margin = margin(t = 10, b = 30), 
+                              size = rel(1.1)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+    # Space between x-axis label and plot
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1.1)),
+    # Space between y-axis label and plot
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1.1)),
+    # Rotate x-axis labels and adjust alignment
+    axis.text.x = element_text(angle = 35, hjust = 1, vjust = 1, size = rel(1)),
     legend.position = "right",
     legend.key = element_blank(),
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 10)
+    legend.title = element_text(size = rel(1)),
+    legend.text = element_text(size = rel(1))
   ) +
+
+  # Flip coordinates if necessary
   coord_flip(clip = "off")
 ```
 
-**Figure 6. A heatmap visualisation of property related offences in Clayton and its neighbouring
-suburbs. The colour palette shows the frequency of offences, and the percentage inside each
-box represents the proportion of a specific offence subdivision within a particular suburb.**
+**Figure 6. A heatmap visualisation of property related offences in
+Clayton and its neighbouring suburbs. The colour palette shows the
+frequency of offences, and the percentage inside each box represents the
+proportion of a specific offence subdivision within a particular
+suburb.**
 
-The heatmap analysis revealed that the suburb of Springvale recorded the highest count of
-offences for theft, followed closely by Clayton. This granular analysis allows us to identify
-hotspots for specific types of criminal activities in suburbs surrounding universities. While the bar
-chart in Figure 5. gives us a broad understanding of the types of crimes that are more prevalent in
-each area type, the heatmap goes a step further by pinpointing the exact suburbs where these
-crimes are most concentrated (in a subset of data).
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig6.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+The heatmap analysis revealed that the suburb of Springvale recorded the
+highest count of offences for theft, followed closely by Clayton. This
+granular analysis allows us to identify hotspots for specific types of
+criminal activities in suburbs surrounding universities. While the bar
+chart in Figure 5. gives us a broad understanding of the types of crimes
+that are more prevalent in each area type, the heatmap goes a step
+further by pinpointing the exact suburbs where these crimes are most
+concentrated (in a subset of data).
 
 ## Exploring Patterns in Criminal Offences
 
-As we have previously identified, that property related offences (Property & Deception) are most
-prevalent in and around areas with university campuses, we now aim to identify any patterns in
-criminal offences between university suburbs, neighbouring suburbs and the broader LGAs. We
-visualise the suburb boundaries and university locations on an interactive map of Victoria, using
-leaflet, as seen in Figure 7. below. This geographical representation allows for an immediate visual
-interpretation of crime prevalence in different regions of Victoria.
+As we have previously identified, that property related offences
+(Property & Deception) are most prevalent in and around areas with
+university campuses, we now aim to identify any patterns in criminal
+offences between university suburbs, neighbouring suburbs and the
+broader LGAs. We visualise the suburb boundaries and university
+locations on an interactive map of Victoria, using leaflet, as seen in
+Figure 7. below. This geographical representation allows for an
+immediate visual interpretation of crime prevalence in different regions
+of Victoria.
 
 ```{r}
 property_offences <- df_offtype %>%
@@ -943,7 +1080,15 @@ property_offences <- subset(property_offences, Suburb != "MELBOURNE")
 ```
 
 ```{r}
-vic_sub_data <- left_join(vic_sub, property_offences, by = c("VIC_LOCA_2" = "Suburb"))
+vic_sub_data <- left_join(vic_sub, property_offences,
+                          by = c("VIC_LOCA_2" = "Suburb"))
+```
+
+```{r}
+# Standardise datasets to the same CRS
+vic_sub_data <- st_transform(vic_sub_data, crs = 4326)
+df_uni_spatial <- st_transform(df_uni_spatial, crs = 4326)
+
 ```
 
 ```{r}
@@ -953,24 +1098,24 @@ color_vector <- colorRampPalette(RColorBrewer::brewer.pal(11, "RdGy"))
 # Create a reversed vector of colors
 reversed_colors <- rev(color_vector(11))
 
-# Figure 7. Leaflet plot of property-related offences
-leaflet(vic_sub_data, width = 15, height = 8) %>%
-  # Add a background map
-  addProviderTiles(providers$OpenStreetMap) %>%
-
-  # Add polygons for suburbs, color-coded by property-related offences
+# Create a reversed vector of colors
+final_map <- leaflet(vic_sub_data) %>%
+  addTiles() %>%
+  
+  # Add polygons with color gradient
   addPolygons(
-    fillColor = ~ colorQuantile(reversed_colors, Total_Count)(Total_Count),
-    weight = 1,
-    opacity = 1,
+    fillColor = ~colorQuantile(reversed_colors, Total_Count)(Total_Count),
     color = "grey",
+    weight = 1,
     fillOpacity = 0.7
   ) %>%
+  
   # Add markers for universities
   addMarkers(
     data = df_uni_spatial,
     label = ~institution
   ) %>%
+  
   # Add legend
   addLegend(
     pal = colorQuantile(reversed_colors, NULL, n = 5),
@@ -979,16 +1124,28 @@ leaflet(vic_sub_data, width = 15, height = 8) %>%
     title = "Frequency of Property-Related Offences",
     position = "bottomright"
   )
+
+# Save interactive map as HTML file
+# saveWidget(final_map, file = "../images/fig7.html", selfcontained = FALSE)
 ```
 
-**Figure 7. Representation of an interactive leaflet map of property-related offences in Victoria.
-The blue markers represent the locations of universities, and the colour gradient indicates the
-frequency of offences in each suburb. The colour intensity increases with frequency of offences.**
+```{r, echo=FALSE, out.width="100%"}
+# Save static image for report
+knitr::include_graphics("../images/fig7.png")
+```
 
-The leaflet map, Figure 7, shows that suburbs containing university campuses have a significantly
-higher frequency of property-related offences, ranging between 80-90%. In contrast, the
-neighbouring suburbs show a frequency ranging between 60-80%. This clear pattern underscores
-the need for targeted interventions in areas with educational institutions.
+**Figure 7. Representation of an interactive leaflet map of
+property-related offences in Victoria. The blue markers represent the
+locations of universities, and the colour gradient indicates the
+frequency of offences in each suburb. The colour intensity increases
+with frequency of offences.**
+
+The leaflet map, Figure 7, shows that suburbs containing university
+campuses have a significantly higher frequency of property-related
+offences, ranging between 80-90%. In contrast, the neighbouring suburbs
+show a frequency ranging between 60-80%. This clear pattern underscores
+the need for targeted interventions in areas with educational
+institutions.
 
 ```{r}
 # Group and summarize the data, including Offence.Division
@@ -998,75 +1155,106 @@ time_trend_data <- df_offtype_clayton_neighbors %>%
 
 # Generate the facet grid of line charts
 ggplot(time_trend_data, aes(x = Year, y = Total_Count, color = Suburb)) +
-  geom_line() +
-  geom_point() +
+  geom_line(size = 0.3) + 
+  geom_point(size = 1) +
 
   # Title and Axis Labels
   ggtitle("Offence Trends Over Time: Clayton vs Neighboring Suburbs") +
   xlab("Year") +
   ylab("Total Offence Count") +
+
+  # Facet by Offence Division
   facet_wrap(~`Offence.Division`) +
 
   # Theme and Formatting
   theme_economist() +
   theme(
-    plot.title = element_text(hjust = 0.5, margin = margin(t = 10, b = 20)),
-    plot.margin = margin(10, 40, 10, 10),
-    axis.title.x = element_text(margin = margin(t = 20)),
-    axis.title.y = element_text(margin = margin(r = 20)),
+    plot.title = element_text(hjust = 0.5,
+                              margin = margin(t = 10, b = 30),
+                              size = rel(1.2)),
+    plot.margin = margin(0.5, 1, 0.5, 0.5, "cm"),
+    # Space between x-axis label and plot
+    axis.title.x = element_text(margin = margin(t = 20), size = rel(1)),
+    # Space between y-axis label and plot
+    axis.title.y = element_text(margin = margin(r = 20), size = rel(1)),
     legend.position = "right",
     legend.key = element_blank(),
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 10),
-    strip.text = element_text(size = 10)
+    legend.title = element_text(size = rel(1)),
+    legend.text = element_text(size = rel(0.7)),
+    # Facet label and panel spacing
+    strip.text = element_text(size = rel(0.5)),
+    # x and y axis text size
+    axis.text = element_text(size = rel(0.5)),
+    panel.spacing.y = unit(2, "lines"),
+    panel.spacing.x = unit(1, "lines")
   )
-
 ```
 
-**Figure 8. A faceted time-series analysis of criminal offence trends in Clayton and neighbouring
-suburbs. The different coloured, line styles represent each suburb's offence trends over time.**
+**Figure 8. A faceted time-series analysis of criminal offence trends in
+Clayton and neighbouring suburbs. The different coloured, line styles
+represent each suburb's offence trends over time.**
 
-The time series analysis in Figure 8. above provides insights into the evolution of criminal
-behaviour in Clayton and its neighbouring suburbs. It revealed that although Springvale
-consistently has the highest overall criminal activity in all offence divisions, a group of suburbs
-including Springvale, Clayton, Mount Waverley, and Mulgrave shows notably high offence counts
-specifically for property and deception offences. This trend over time emphasises the persistent
-nature of certain crimes in these areas. Additionally, we also identified that in this subset of data,
-the suburb Mulgrave had the highest count of offences related to property and deception in the
-year 2016. After further research, it became evident that in 2016 more than 20,000 vehicles were
-stolen and railway stations in Mulgrave were a common spot. (Stephen Johnson, 2018) Hence, our
-time series analysis also offers a historical context, showcasing the trends in criminal activities
-and how they fluctuated over time.
+```{r, echo=FALSE}
+# Save plot
+# ggsave("../images/fig8.png", dpi = 300, height = 12, width = 20, units = "cm")
+```
+
+The time series analysis in Figure 8. above provides insights into the
+evolution of criminal behaviour in Clayton and its neighbouring suburbs.
+It revealed that although Springvale consistently has the highest
+overall criminal activity in all offence divisions, a group of suburbs
+including Springvale, Clayton, Mount Waverley, and Mulgrave shows
+notably high offence counts specifically for property and deception
+offences. This trend over time emphasises the persistent nature of
+certain crimes in these areas. Additionally, we also identified that in
+this subset of data, the suburb Mulgrave had the highest count of
+offences related to property and deception in the year 2016. After
+further research, it became evident that in 2016 more than 20,000
+vehicles were stolen and railway stations in Mulgrave were a common
+spot. (Stephen Johnson, 2018) Hence, our time series analysis also
+offers a historical context, showcasing the trends in criminal
+activities and how they fluctuated over time.
 
 # Conclusion
 
-The primary goal of this study was to explore the criminal landscape surrounding university
-campuses in Victoria, Australia. By focusing on three main research questions, our analyses
-revealed that property-related offences, particularly 'Theft', are the most common types of crimes
-in university suburbs. This aligns with the personal experience that motivated this study,
-suggesting that theft of personal items on university campuses is a concern worth addressing.
-Furthermore, the data showed a higher concentration of crimes against persons, drug offences,
-and public order/safety crimes in university suburbs compared to neighbouring ones. This finding
-provides valuable insights for law enforcement agencies and university security services to focus
-their preventative measures on specific types of crimes near educational institutions. Our spatial
-analyses highlighted that property related crimes are particularly prevalent in university suburbs,
-with frequencies between 80-90%. Neighbouring suburbs displayed lower frequencies, between
-60-80% of offences. The time-series analyses indicated that university suburbs have persistent
-high counts of property related criminal offences, adding a temporal dimension to our spatial
-findings. While our study offers valuable insights, it also has limitations. For instance, our data
-does not account for population sizes or rates per capita, which could offer additional insights into
-crime rates. Future research could incorporate these variables and possibly extend the study to
-other states and educational institutions for a more comprehensive view. Overall, this study serves
-as a data-driven foundation for policymaking and community engagement. Law enforcement
-agencies and university security services can use these findings to better allocate resources and
-implement targeted interventions.
+The primary goal of this study was to explore the criminal landscape
+surrounding university campuses in Victoria, Australia. By focusing on
+three main research questions, our analyses revealed that
+property-related offences, particularly 'Theft', are the most common
+types of crimes in university suburbs. This aligns with the personal
+experience that motivated this study, suggesting that theft of personal
+items on university campuses is a concern worth addressing. Furthermore,
+the data showed a higher concentration of crimes against persons, drug
+offences, and public order/safety crimes in university suburbs compared
+to neighbouring ones. This finding provides valuable insights for law
+enforcement agencies and university security services to focus their
+preventative measures on specific types of crimes near educational
+institutions. Our spatial analyses highlighted that property related
+crimes are particularly prevalent in university suburbs, with
+frequencies between 80-90%. Neighbouring suburbs displayed lower
+frequencies, between 60-80% of offences. The time-series analyses
+indicated that university suburbs have persistent high counts of
+property related criminal offences, adding a temporal dimension to our
+spatial findings. While our study offers valuable insights, it also has
+limitations. For instance, our data does not account for population
+sizes or rates per capita, which could offer additional insights into
+crime rates. Future research could incorporate these variables and
+possibly extend the study to other states and educational institutions
+for a more comprehensive view. Overall, this study serves as a
+data-driven foundation for policymaking and community engagement. Law
+enforcement agencies and university security services can use these
+findings to better allocate resources and implement targeted
+interventions.
 
 # Bibliography
-Crime Statistics Agency. (2023, July 21). Offence classification. Crime Statistics Agency Victoria.   
-https://www.crimestatistics.vic.gov.au/about-the-data/classifications-and-victorian-map-boundaries/offence-classification   
 
-Safer Community Unit. Current students. (2023, September 12).   
-https://www.monash.edu/students/support/safety-security/safer-community-unit    
+Crime Statistics Agency. (2023, July 21). Offence classification. Crime
+Statistics Agency Victoria.\
+<https://www.crimestatistics.vic.gov.au/about-the-data/classifications-and-victorian-map-boundaries/offence-classification>
 
-Stephen Johnson. (2018, January 7). More than 20,000 vehicles stolen in Victoria last year. Daily Mail Online.    
-https://www.dailymail.co.uk/news/article-5243417/More-20-000-vehicles-stolen-Victoria-year.html   
+Safer Community Unit. Current students. (2023, September 12).\
+<https://www.monash.edu/students/support/safety-security/safer-community-unit>
+
+Stephen Johnson. (2018, January 7). More than 20,000 vehicles stolen in
+Victoria last year. Daily Mail Online.\
+<https://www.dailymail.co.uk/news/article-5243417/More-20-000-vehicles-stolen-Victoria-year.html>
