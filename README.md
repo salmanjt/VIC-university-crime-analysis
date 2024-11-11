@@ -1,6 +1,5 @@
 # Exploring Criminal Offences and Crime Patterns in Proximity to University Campuses in Victoria, Australia
 
-<<<<<<< HEAD
 ![Crime-Patterns-University-VIC](images/crime-patterns-university-vic.png)
 
 > This project forms part of a larger research initiative that aims to develop an interactive narrative visualisation, showcasing the pivotal findings from our exploration of crime trends in areas surrounding university campuses. This project repository showcases my initial exploratory data analysis (EDA). The interactive narrative visualisation stemming from this analysis will be shared in a separate repository. Stay tuned for updates!
@@ -132,8 +131,3 @@ This project utilises the following open datasets for analysis:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/salmanjt/VIC-university-crime-analysis/blob/main/LICENSE) file for details.
-=======
-todo:
-- [x] refine project files
-- [ ] write project description
->>>>>>> 691cbd252857bc601dacb4ab7c63048d67377a2c
