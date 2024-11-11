@@ -1,7 +1,5 @@
 # Exploring Criminal Offences and Crime Patterns in Proximity to University Campuses in Victoria, Australia
 
-![Crime-Patterns-University-VIC](images/crime-patterns-university-vic.png)
-
 > This project forms part of a larger research initiative that aims to develop an interactive narrative visualisation, showcasing the pivotal findings from our exploration of crime trends in areas surrounding university campuses. This project repository showcases my initial exploratory data analysis (EDA). The interactive narrative visualisation stemming from this analysis will be shared in a separate repository. Stay tuned for updates!
 
 ## Project Description
