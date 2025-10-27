@@ -59,7 +59,6 @@ This research utilises data visualisation and geospatial analysis to reveal tren
 ├─ .gitignore
 ├─ LICENSE
 ├─ README.md
-├─ VIC-university-crime-analysis.Rproj
 ├─ data
 │  └─ input
 │     ├─ Data_Tables_LGA_Criminal_Incidents_Year_Ending_March_2023.xlsx
@@ -91,8 +90,7 @@ This research utilises data visualisation and geospatial analysis to reveal tren
 │  │  ├─ (HTML files )
 │  └─ fig8.png
 └─ notebooks
-   ├─ 01-crime-analysis.Rmd
-   └─ 01-crime-analysis.pdf
+   └─ 01-crime-analysis.Rmd
 ```
 
 ## Installation
